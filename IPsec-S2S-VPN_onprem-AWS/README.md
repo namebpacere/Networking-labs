@@ -28,7 +28,7 @@ This isn't just a copy of my end-of-studies report. It's a rewritten, explanatio
 | [06 AWS Setup](docs/06-aws-setup.md) | VPC, EC2, strongSwan configuration |
 | [07 MikroTik Setup](docs/07-mikrotik-config.md) | Router-side configuration |
 | [08 Testing & Validation](docs/08-testing.md) | Proving it actually works |
-| [9 Lessons & Future Work](docs/09-future-work.md) | What's next: Terraform, HA, more |
+| [09 Lessons & Future Work](docs/09-future-work.md) | What's next: Terraform, HA, more |
 
 ---
 
