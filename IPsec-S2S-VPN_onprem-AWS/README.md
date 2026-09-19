@@ -10,12 +10,9 @@ This isn't just a copy of my end-of-studies report. It's a rewritten, explanatio
 
 ---
 
-## Architecture at a Glance
-
-> ✍️ YOUR TURN: Insert your architecture diagram here (the draw.io figure from your report, cleaned up if needed).
+## Architecture
 
 <img width="1166" height="666" alt="image" src="https://github.com/user-attachments/assets/f0a28305-5bb6-46ae-8404-bda991f09d07" />
-
 
 ---
 
