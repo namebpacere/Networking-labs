@@ -1,5 +1,7 @@
 ## Architecture
 
+You can find the actual draw.io file in the diagram folder
+
 <img width="1168" height="667" alt="image" src="https://github.com/user-attachments/assets/44bd6e26-16ba-4290-a6b3-0cb8a0b52d10" />
 
 ## IP Addressing Plan
