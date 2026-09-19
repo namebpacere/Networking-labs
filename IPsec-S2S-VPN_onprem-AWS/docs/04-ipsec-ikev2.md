@@ -7,7 +7,7 @@ IPsec is a suite of protocols and mechanisms (not a single protocol) defined acr
 
 ## The Three Security Guarantees
 
-- Confidentiality means that the content of the communication cannot be read by an unauthorized party. In your implementation, this is provided by encryption, specifically AES-based protection through the protocol ESP
+- **Confidentiality** means that the content of the communication cannot be read by an unauthorized party. In your implementation, this is provided by encryption, specifically AES-based protection through the protocol ESP
 - **Integrity** means that the receiver can detect whether the packet has been modified during transmission. With classic ESP proposals, this can be provided by HMAC; with AES-GCM, encryption and integrity/authentication are combined in an AEAD algorithm
 - **Authentication** verifies the identity of the VPN peer before protected traffic is exchanged
 
@@ -22,8 +22,8 @@ AH is problematic with NAT because it protects IP-header information, while NAT 
 
 ## Tunnel Mode vs. Transport Mode
 
-** Transport mode **: the original IP header remains visible, and IPsec mainly protects the upper-layer payload.
-** Tunnel mode **: The entire original IP packet is encapsulated and protected, then a new outer IP header is added for the VPN gateways. RFC 4301 defines both transport and tunnel modes
+**Transport mode**: the original IP header remains visible, and IPsec mainly protects the upper-layer payload.
+**Tunnel mode**: The entire original IP packet is encapsulated and protected, then a new outer IP header is added for the VPN gateways. RFC 4301 defines both transport and tunnel modes
 
 I used tunnel mode because the objective was to connect two IP networks
 
