@@ -44,5 +44,3 @@ It defines *which traffic* gets encrypted (source 192.168.0.0/24 --> destination
 ## Firewall Rule
 
 An explicit accept rule is needed for 192.168.0.0/24 --> 10.0.20.0/24
-
-> ✍️ YOUR TURN: One line — why an explicit accept rule was needed for 192.168.0.0/24 → 10.0.20.0/24 even after IPsec was configured (IPsec policy alone doesn't bypass the firewall; RouterOS still evaluates firewall rules on the decrypted/pre-encrypted traffic).
