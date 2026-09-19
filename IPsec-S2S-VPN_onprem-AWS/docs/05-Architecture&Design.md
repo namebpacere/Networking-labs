@@ -33,6 +33,11 @@ For example, a packet coming from the on-premise network may be destined for 10.
 
 AWS explicitly requires this setting for instances performing routing, NAT or firewall functions.
 
+However this is not enough. You need to allow IP packets forwarding at the OS layer, i mean directly on the VPN gateway console with:
+```bash
+sudo sysctl -w net.ipv4.ip_forward=1
+```
+
 ## Routing: The Return Path
 
 The private subnet has a route for the on-premise network 192.168.0.0/24, with the VPN gateway's network interface as the next hop. Therefore, when the application server sends a packet to an address in 192.168.0.0/24, AWS forwards it to the gateway.
