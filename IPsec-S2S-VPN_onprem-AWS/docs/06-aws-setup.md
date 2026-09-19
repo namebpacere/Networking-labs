@@ -1,4 +1,4 @@
-# 06 — AWS-Side Setup: VPC, EC2 & strongSwan
+# AWS-Side Setup: VPC, EC2 & strongSwan
 
 ## VPC & Subnets
 
