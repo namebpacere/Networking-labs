@@ -17,13 +17,14 @@ sudo swanctl --list-sas
 
 You'll see somthing like that
 <img width="862" height="194" alt="image" src="https://github.com/user-attachments/assets/d231079a-43bb-4157-b75e-ec5e787a32ea" />
+
 `in` for reveived and decrypted packets and `out` for encrypted sent packets
 
 ## Test 2: Confirming Encryption
 
 To be able to do this capture I mirrored the `ether1` port to `ether5` port on the MikroTik and did a ping to a PC on the on-prem network, so Wireshark could observe WAN-side traffic. and what the capture showed:
 > - ESP encapsulated inside UDP/4500 (confirms NAT-T is active)
-> - Payload unreadable — only transport metadata visible (source/destination gateway IPs, sequence number, SPI)
+> - Payload unreadable: only transport metadata visible (source/destination gateway IPs, sequence number, SPI)
 > - This confirms confidentiality was observed on the traffic captured, not a formal cryptographic audit of the cipher's strength.
 
 <img width="886" height="729" alt="image" src="https://github.com/user-attachments/assets/84a54c9f-a723-4e2e-b01e-d2aaa3de9d4a" />
