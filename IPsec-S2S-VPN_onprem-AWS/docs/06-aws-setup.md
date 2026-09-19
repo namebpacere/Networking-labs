@@ -93,7 +93,7 @@ connections {
                 local_ts = 10.0.20.0/24
                 remote_ts = 192.168.0.0/16
 
-                esp_proposals = aes256gcm16-sha256-ecp256
+                esp_proposals = aes256gcm16-ecp256
 
                 start_action = trap
                 rekey_time = 1h
