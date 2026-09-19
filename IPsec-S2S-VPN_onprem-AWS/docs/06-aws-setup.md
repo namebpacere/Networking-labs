@@ -63,6 +63,7 @@ You'll see active (running), enabled. If not, something definetely wrong.
 ## The swanctl.conf Configuration
 
 All the configuration for the tunnel sits in this file. You need to specify the remote VPN gateway, traffic selectors, authentication method, and some other parameters. You can check their website for reference and syntax ```https://docs.strongswan.org/docs/latest/swanctl/swanctlConf.html```
+
 This is the content of the /etc/swanctl/swanctl.conf for this project. 
 
 ```
@@ -121,6 +122,7 @@ secrets {
 Lets Walk through it parameter by parameter:
 
 1. ```version = 2```
+
 This specifies that we use IKEv2 for the VPN negotiation. We chose IKEv2 because it is the modern version of IKE and is supported by both strongSwan and the MikroTik router.
 
 2. ```proposals = aes256-sha256-ecp256```
@@ -128,44 +130,57 @@ This specifies that we use IKEv2 for the VPN negotiation. We chose IKEv2 because
 This defines the cryptographic proposal for the IKE SA: AES-256 for encryption, SHA-256 for integrity, and ECP-256 for the Diffie-Hellman key exchange. These parameters define how the two gateways secure the IKE control channel.
 
 3. Local/remote identities
+   
 ```
 id = keyid:EC2-vpn-aws
 id = keyid:mikrotik-onprem-canal
 ```
+
 These are the identities used to identify the two VPN peers during IKE authentication. We explicitly defined them instead of relying only on their IP addresses, so each side can verify which peer it is communicating with.
 
 4. Authentication by PSK
+   
 ```
 auth = psk
 ```
+
 PSK means Pre-Shared Key. Both gateways authenticate using the same secret key, which is stored in the secrets section and associated with the two configured identities.
 The PSK is not used to encrypt the application traffic directly; it is used to authenticate the peers during IKE
 
 5. children, Traffic Selectors
+   
 ```
 local_ts = 10.0.20.0/24
 remote_ts = 192.168.0.0/16
 ```
+
 The Child SA defines which traffic must be protected by IPsec. local_ts represents the AWS application network, while remote_ts represents the on-premise network. Therefore, traffic between these two networks is selected for encryption through the IPsec tunnel.
 
 6. ```esp_proposals = aes256gcm16-ecp256```
+   
 This defines the cryptographic parameters for the Child SA, which protects the actual data traffic through ESP. AES-256-GCM provides authenticated encryption, while ECP-256 can be used for the Diffie-Hellman exchange during Child SA rekeying, providing PFS when configured and negotiated.
 
-7. ```remote_addrs = <YOUR PUBLIC IP>```
+8. ```remote_addrs = <YOUR PUBLIC IP>```
+   
 This specifies the public IP address of the remote MikroTik peer. We used the site's actual static public IP because the remote peer is known and has a fixed public address. This provides an additional restriction on which peer the gateway expects to establish the connection with.
 The same public IP is also used to restrict administrative and testing access in the AWS Security Group. So the restriction exists both at the VPN configuration level and at the AWS network-access level, where applicable.
 
-8. Rekey timers
+10. Rekey timers
+    
 ```rekey_time = 8h```
+
 The IKE SA is rekeyed periodically, here after eight hours, so the long-lived IKE security association is not kept indefinitely.
 
 And :
+
 ```rekey_time = 1h```
+
 The Child SA protecting the actual application traffic is rekeyed more frequently, every hour in this configuration. This limits the lifetime of the traffic-encryption keys and can also be combined with PFS when a DH group is configured for Child SA rekeying.
 
 ## Loading & Verifying the Configuration
 
 Load the configs from the '/etc/swanctl/' directory:
+
 ```bash
 sudo swanctl --load-all
 ```
