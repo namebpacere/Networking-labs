@@ -8,7 +8,7 @@
 
 ## Step 1: IPsec Profile (Phase 1 parameters)
 
-This is your IKE SA proposal —-> `proposals` in swanctl.conf 
+This is your IKE SA proposal --> `proposals` in swanctl.conf 
 
 I noted one limitation though. RouterOS's Profile menu doesn't expose AES-GCM as an option, unlike the Proposal menu used for ESP.
 
