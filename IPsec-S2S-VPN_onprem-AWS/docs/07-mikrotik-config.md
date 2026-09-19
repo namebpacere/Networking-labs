@@ -21,29 +21,28 @@ For my case, NAT-T must be enabled here.
 
 The remote endpoint that terminates the tunnel, the EC2-strongSwan instance. The connection is initiated by the MikroTik router.
 
-```
-<img width="526" height="421" alt="image" src="https://github.com/user-attachments/assets/32fac177-10f2-4601-a4de-e9ad4ad07059" />
-
-```
-
 ## Step 3: Proposal & Identity (Phase 2 / ESP parameters)
 
-> ✍️ YOUR TURN:
-> - Proposal: explain why `aes-256 gcm` alone was sufficient here (no separate authentication algorithm needed — it's built into GCM) — this should mirror the ESP explanation from doc 04
-> - Identity: explain that both sides must use matching identity strings (`EC2-vpn-aws` / `mikrotik-onprem-canal`) — a mismatch here is one of the most common tunnel failure causes
+`aes-256 gcm` alone is sufficient here, no separate authentication algorithm is needed because it's built into GCM. It provides encrytion + integrity/authentication in one operation --> faster operation
 
-```
-✍️ YOUR TURN: insert your Proposal + Identity config screenshots
-```
+Identity: both sides must use matching identity strings (`EC2-vpn-aws` / `mikrotik-onprem-canal`). A mismatch here is one of the most common tunnel failure causes
+
+<img width="567" height="557" alt="image" src="https://github.com/user-attachments/assets/f0a58f07-18bb-48f7-baa4-038404094afc" />
+
+<img width="578" height="667" alt="image" src="https://github.com/user-attachments/assets/2a427a46-7022-4716-b8da-88eac4bd35d5" />
+
 
 ## Step 4: IPsec Policy
 
-> ✍️ YOUR TURN: Explain what a policy actually does — it defines *which traffic* gets encrypted (source 192.168.0.0/24 → destination 10.0.20.0/24), pointing to the peer and the proposal created above. Emphasize: **if a Policy doesn't match, IPsec never gets invoked at all** — traffic just goes out in the clear or gets dropped, depending on firewall rules. This is a great "what happens if X is misconfigured" answer to have ready.
+It defines *which traffic* gets encrypted (source 192.168.0.0/24 --> destination 10.0.20.0/24), pointing to the peer and the proposal created above. 
 
-```
-✍️ YOUR TURN: insert your Policy config screenshot
-```
+**If a Policy doesn't match, IPsec never gets invoked at all** and traffic just goes out in the clear or gets dropped, depending on firewall rules.
+
+<img width="566" height="494" alt="image" src="https://github.com/user-attachments/assets/6d06d982-0ba8-4b68-8f24-b6db57bf0568" />
+
 
 ## Firewall Rule
+
+An explicit accept rule is needed for 192.168.0.0/24 --> 10.0.20.0/24
 
 > ✍️ YOUR TURN: One line — why an explicit accept rule was needed for 192.168.0.0/24 → 10.0.20.0/24 even after IPsec was configured (IPsec policy alone doesn't bypass the firewall; RouterOS still evaluates firewall rules on the decrypted/pre-encrypted traffic).
