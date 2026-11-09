@@ -72,7 +72,7 @@ Public-facing services are placed in a dedicated DMZ rather than directly inside
 
 * **[Design](design/)** : Network topology diagrams and architectural documentation.
 * **[Addressing](addressing/)** : IPv4 addressing plan, VLANs, subnets, and point-to-point links.
-* **[Configurations](configurations/)** : Device configurations for routers, switches, and security components.
+* **[Configurations](configurations/)** : Device configurations for routers and switches (not yet imported).
 * **[Validation](validation/)** : Connectivity tests, routing verification, redundancy tests, and troubleshooting results.
 * **[Packet Tracer Files](packet-tracer/)** : Cisco Packet Tracer `.pkt` lab files.
 * **[Changelog](CHANGELOG.md)** : Project changes and configuration history.
