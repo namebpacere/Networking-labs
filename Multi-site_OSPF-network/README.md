@@ -79,7 +79,7 @@ Public-facing services are placed in a dedicated DMZ rather than directly inside
 
 ## Limitations
 
-This project is implemented in a **Cisco Packet Tracer simulation environment**. Consequently, some behaviors and capabilities are simplified or not fully represented. Packet tracer also struggle when the lab get big. As a result, some commands can be successfully applied, but have no effect although they appear in the running configuration. I had this issue a couple of times in some personal labs and also with JeremysIT Lab's CCNA mega lab. The command `ip helper-address 10.0.0.7` completely refused, thus preventing clients to lease addressed automaticaly.
+This project is implemented in a **Cisco Packet Tracer simulation environment**. Consequently, some behaviors and capabilities are simplified or not fully represented. Packet tracer also struggle when the lab get big. As a result, some commands can be successfully applied, but have no effect although they appear in the running configuration. I had this issue a couple of times in some personal labs and also with JeremysIT Lab's CCNA mega lab. The command `ip helper-address 10.0.0.76` completely refused, thus preventing clients to lease addressed automaticaly.
 
 Key limitations include:
 
