@@ -10,7 +10,7 @@ Internal departmental networks are segmented using dedicated **VLANs**, with eac
 
 Point-to-point routed links use `/30` subnets from the `10.0.0.0/8` private address space, while simulated Internet-facing links use public IPv4 addressing.
 
-The routing architecture relies primarily on **OSPF** for dynamic internal routing, while **BGP** is used at the Internet edge to simulate external routing.
+The routing architecture relies primarily on **OSPF** for dynamic internal routing, while **BGP** is used at the Internet edge.
 
 ## Objectives
 
@@ -20,7 +20,7 @@ The main objectives of this architecture are:
 * **Perimeter Security:** Isolate public-facing services within a dedicated DMZ and control traffic between security zones using a Zone-Based Firewall.
 * **Network Segmentation:** Separate departmental traffic into dedicated VLANs to reduce broadcast domains and improve traffic isolation.
 * **Dynamic Routing:** Use OSPF to automatically exchange internal routes and provide dynamic path selection across the multi-site infrastructure.
-* **Internet Edge Redundancy:** Simulate redundant Internet connectivity using two edge routers and BGP.
+* **Internet Edge Redundancy:** Simulate redundant Internet connectivity using two edge routers.
 * **Cost-Optimized Scalability:** Deploy a full three-tier architecture at the headquarters while using a collapsed-core model at the branch to reduce infrastructure complexity and hardware requirements.
 * **Efficient IPv4 Allocation:** Apply VLSM to allocate `/27` subnets to departmental networks and `/30` subnets to point-to-point transit links, minimizing IPv4 address waste.
 
@@ -38,12 +38,11 @@ The architecture uses the following networking technologies and protocols:
 * **BGP** : Exterior Gateway Protocol used to simulate routing between the enterprise network and external networks.
 * **Zone-Based Firewall** : Stateful traffic filtering between defined security zones.
 * **NAT** : Translation between private and public IPv4 address spaces.
-* **Layer 3 Routing** : IP-based forwarding between sites, VLANs, and network segments.
 
 
 ### Agency A : Headquarters
 
-Agency A uses a **three-tier hierarchical architecture**:
+Agency A uses a **three-tier hierarchical architecture** also known as Cisco Borderless network architecture in cisco gear:
 
 * **Core Layer:** Provides high-speed Layer 3 connectivity and redundant paths between major network segments.
 * **Distribution Layer:** Aggregates access switches, provides inter-VLAN routing, implements redundancy, and applies network policies.
@@ -80,11 +79,17 @@ Public-facing services are placed in a dedicated DMZ rather than directly inside
 
 ## Limitations
 
-This project is implemented in a **Cisco Packet Tracer simulation environment**. Consequently, some behaviors and capabilities are simplified or not fully represented.
+This project is implemented in a **Cisco Packet Tracer simulation environment**. Consequently, some behaviors and capabilities are simplified or not fully represented. Packet tracer also struggle when the lab get big. As a result, some commands can be successfully applied, but have no effect although they appear in the running configuration. I had this issue a couple of times in some personal labs and also with JeremysIT Lab's CCNA mega lab. The command `ip helper-address 10.0.0.76` completely refused, thus preventing clients to lease addressed automaticaly.
 
 Key limitations include:
 
-*
+* Headquarters internet connectivity depends on just one edge router and the wan link (between the two core switches) which leads to the other edge router. If one edge router falls, traffic takes more time to reach to other gateway. So an improvement of this topology would be to connect each core switch to both edge routers. The automatic failover will be handled be default floating static routes. Thus providing three paths to the internet. Or originate the default on both edge routers rather than configure statics on SW-C1/SW-C2: the two campus halves then each get a working default from their nearest edge router, and if WAN A fails, OSPF removes Router-E1's default and traffic converges on Router-E2 across Po1 without any floating-static AD tuning.
+* There is no network monitoring protocol configured. The server in Headquarter B could be configured for it. So there is no control over who entered which command on which device at what time (by the way NTP is also no configured)
+* SSH administration is not configured and is quite a limitation in an enterprise network. 
+* The switchports at the access layer are not secured (port security isn't enabled). DAI and DHCP snooping would also be a great security improvement
+* SW-A3 is single-homed to one trunk only, so it has no path redundancy at Layer 2
+* VLAN 50/60 routes hinge on SW-AD1, which is a single switch becoming a SPO
+* SW-C1 is a single point of failure. Both distribution switches reach both edge routers only through SW-C1
 
 ## Future Improvements
 
