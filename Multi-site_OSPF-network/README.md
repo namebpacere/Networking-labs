@@ -83,10 +83,13 @@ This project is implemented in a **Cisco Packet Tracer simulation environment**.
 
 Key limitations include:
 
-* Headquarters internet connectivity depends on just one edge router and the wan link (between the two core switches) which leads to the other edge router. If one edge router falls, traffic takes more time to reach to other gateway. So an improvement of this topology would be to connect each core switch to both edge routers. The automatic failover will be handled be default floating static routes. Thus providing three paths to the internet. easy
+* Headquarters internet connectivity depends on just one edge router and the wan link (between the two core switches) which leads to the other edge router. If one edge router falls, traffic takes more time to reach to other gateway. So an improvement of this topology would be to connect each core switch to both edge routers. The automatic failover will be handled be default floating static routes. Thus providing three paths to the internet. Or originate the default on both edge routers rather than configure statics on SW-C1/SW-C2: the two campus halves then each get a working default from their nearest edge router, and if WAN A fails, OSPF removes Router-E1's default and traffic converges on Router-E2 across Po1 without any floating-static AD tuning.
 * There is no network monitoring protocol configured. The server in Headquarter B could be configured for it. So there is no control over who entered which command on which device at what time (by the way NTP is also no configured)
 * SSH administration is not configured and is quite a limitation in an enterprise network. 
 * The switchports at the access layer are not secured (port security isn't enabled). DAI and DHCP snooping would also be a great security improvement
+* SW-A3 is single-homed to one trunk only, so it has no path redundancy at Layer 2
+* VLAN 50/60 routes hinge on SW-AD1, which is a single switch becoming a SPO
+* SW-C1 is a single point of failure. Both distribution switches reach both edge routers only through SW-C1
 
 ## Future Improvements
 
